@@ -7,6 +7,7 @@
       xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:BluetoothLEExplorer.Views"
+      xmlns:custom="using:SortedObservableCollection"
       xmlns:converters="using:Template10.Converters"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ggs="using:GattServicesLibrary"
@@ -39,6 +40,8 @@
                 <Visibility>Collapsed</Visibility>
             </converters:ValueWhenConverter.Otherwise>
         </converters:ValueWhenConverter>
+
+        <custom:DeviceToObjectConverter x:Key="DeviceToObjectConverterKey"/>
     </Page.Resources>
     
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -96,7 +99,7 @@
             </StackPanel>
             <GridView RelativePanel.Below="NewService" 
                       ItemsSource="{x:Bind ViewModel.Context.CreatedServices, Mode=OneWay}"
-                      Padding="10" SelectedItem="{x:Bind ViewModel.Context.SelectedGattServerService, Mode=TwoWay}" 
+                      Padding="10" SelectedItem="{x:Bind ViewModel.Context.SelectedGattServerService, Mode=TwoWay, Converter={StaticResource DeviceToObjectConverterKey}}" 
                       SelectionChanged="{x:Bind ViewModel.NavigateToService, Mode=OneWay}" >
                <GridView.ItemTemplate>
                     <DataTemplate x:DataType="vm:GenericGattServiceViewModel">

@@ -111,10 +111,7 @@
                     <ToggleSwitch x:Name="VirtualKeyboardSwitch"
                                   Header="Discoverable and Connectable"
                                   IsOn="{x:Bind ViewModel.IsKeyboardEnabled, Mode=TwoWay}"
-                                  IsEnabled="{x:Bind ViewModel.IsSettingUp.Equals(x:False), Mode=OneWay}"
-                                  IsFocusEngagementEnabled="False"
-                                  AllowFocusOnInteraction="False"
-                                  AllowFocusWhenDisabled="False"
+                                  IsEnabled="True"
                                   IsTabStop="False" />
                 </StackPanel>
 

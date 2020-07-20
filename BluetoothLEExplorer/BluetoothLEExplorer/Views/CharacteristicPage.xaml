@@ -7,6 +7,7 @@
       xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:BluetoothLEExplorer.Views"
+      xmlns:custom="using:SortedObservableCollection"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:converters="using:Template10.Converters"
       xmlns:myconverters="using:BluetoothLEExplorer.Services.Converters"
@@ -42,7 +43,7 @@
 
         <myconverters:DisplayTypeToBooleanConverter x:Key="DisplayTypeToBooleanConverter" />
         <myconverters:WriteTypeToBooleanConverter x:Key="WriteTypeToBooleanConverter" />
-
+        <custom:BoolToNullableConverter x:Key="BoolToNullableConverterKey"/>
 
     </Page.Resources>
 
@@ -213,7 +214,7 @@
                     <Border Name="Value" Background="LightGray" RelativePanel.RightOf="ReadValueText" RelativePanel.AlignVerticalCenterWith="ReadValueText" MinWidth="75" Height="32" Margin="5" >
                         <TextBlock Text="{x:Bind ViewModel.Characteristic.Value, Mode=OneWay}" VerticalAlignment="Center"  Margin="5,0" TextWrapping="WrapWholeWords"/>
                     </Border>
-                    <Button Name="ReadAgainButton" Content="Read Again" Click="{x:Bind ViewModel.Characteristic.ReadValueAsync}" Visibility="{x:Bind ViewModel.CharacteristicCanBeRead, Converter={StaticResource VisibleWhenTrueConverter}}" Margin="5" Width="100" Height="32" d:LayoutOverrides="LeftMargin, RightMargin" />
+                    <Button Name="ReadAgainButton" Content="Read Again" Click="{x:Bind ViewModel.Characteristic.ReadValueAsync}" Visibility="{x:Bind ViewModel.CharacteristicCanBeRead, Converter={StaticResource VisibleWhenTrueConverter}}" Margin="5" Width="100" Height="32" />
 
                     <!-- The radio buttons need to be in different groups because they are all bound to the same property, so it takes care of which ones stays on vs off. If there is no group then the stackpanel container -->
                     <!-- groups them and it conflicts with the value converter -->
@@ -246,7 +247,7 @@
             </TextBlock>
 
             <StackPanel Grid.Row="4">
-                <CheckBox IsChecked="{x:Bind ViewModel.UseWindowsNotifications, Mode=TwoWay}" Content="Use Windows notifications" Visibility="{x:Bind ViewModel.CharacteristicCanNotifyOrIndicate, Converter={StaticResource VisibleWhenTrueConverter}}" />
+                <CheckBox IsChecked="{x:Bind ViewModel.UseWindowsNotifications, Mode=TwoWay, Converter={StaticResource BoolToNullableConverterKey}}" Content="Use Windows notifications" Visibility="{x:Bind ViewModel.CharacteristicCanNotifyOrIndicate, Converter={StaticResource VisibleWhenTrueConverter}}" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Visibility="{x:Bind ViewModel.CharacteristicCanNotify, Converter={StaticResource VisibleWhenTrueConverter}}">
                     <ToggleSwitch x:Name="NotifySwitch" Header="Notify" 
                         OffContent="Off" OnContent="On" IsOn="{x:Bind ViewModel.Notify, Mode=TwoWay}" />
